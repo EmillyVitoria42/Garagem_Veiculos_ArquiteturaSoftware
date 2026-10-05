@@ -1,1 +1,7 @@
-[]
+[ {
+  "id" : 1,
+  "veiculoId" : 1,
+  "pessoaId" : 1,
+  "dataInicio" : "2026-10-05",
+  "dataFim" : "2026-10-06"
+} ]
