@@ -10,7 +10,7 @@ Sistema de cadastro de pessoas e veículos com reservas, usando **MVC + Reposito
 
 ## Integrante
 
-- _(preencha com o seu nome)_
+- _Emilly Vitória Mendonça Pereira_
 
 ## Tecnologias
 
