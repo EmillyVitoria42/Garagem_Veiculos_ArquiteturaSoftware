@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pessoas - Garagem de Veículos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header><h1>Garagem de Veículos</h1></header>
+<main>
+    <div class="card">
+        <div class="topo">
+            <h2>Pessoas</h2>
+            <a class="btn" th:href="@{/pessoas/novo}">Nova pessoa</a>
+        </div>
+
+        <div class="msg msg-ok" th:if="${sucesso}" th:text="${sucesso}"></div>
+        <div class="msg msg-erro" th:if="${erro}" th:text="${erro}"></div>
+
+        <table th:if="${!pessoas.isEmpty()}">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${pessoas}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.nome}"></td>
+                <td th:text="${p.cpf}"></td>
+                <td th:text="${p.email}"></td>
+                <td th:text="${p.telefone}"></td>
+                <td>
+                    <div class="acoes">
+                        <a class="btn btn-sec" th:href="@{/pessoas/{id}/editar(id=${p.id})}">Editar</a>
+                        <form th:action="@{/pessoas/{id}/excluir(id=${p.id})}" method="post"
+                              th:data-nome="${p.nome}"
+                              onsubmit="return confirm('Excluir ' + this.dataset.nome + '?');">
+                            <button type="submit" class="btn btn-perigo">Excluir</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="vazio" th:if="${pessoas.isEmpty()}">Nenhuma pessoa cadastrada.</p>
+    </div>
+</main>
+</body>
+</html>

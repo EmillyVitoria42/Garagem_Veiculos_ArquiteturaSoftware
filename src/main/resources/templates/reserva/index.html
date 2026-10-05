@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reservas - Garagem de Veículos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header><h1>Garagem de Veículos</h1></header>
+<main>
+    <div class="topo">
+        <h2>Reservas</h2>
+        <div>
+            <a class="btn btn-sec" th:href="@{/pessoas}">Pessoas</a>
+            <a class="btn btn-sec" th:href="@{/veiculos}">Veículos</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="msg msg-ok" th:if="${sucesso}" th:text="${sucesso}"></div>
+        <div class="msg msg-erro" th:if="${erro}" th:text="${erro}"></div>
+
+        <h3 th:text="${reserva.id == 0 ? 'Nova reserva' : 'Editar reserva'}">Nova reserva</h3>
+        <form th:object="${reserva}"
+              th:action="${reserva.id == 0} ? @{/reservas} : @{/reservas/{id}/editar(id=${reserva.id})}"
+              method="post">
+            <div class="campo">
+                <label for="veiculoId">Veículo *</label>
+                <select id="veiculoId" th:field="*{veiculoId}" required>
+                    <option value="0">Selecione um veículo</option>
+                    <option th:each="v : ${veiculos}" th:value="${v.id}"
+                            th:text="${v.placa + ' - ' + v.marca + ' ' + v.modelo + ' (' + statusVeiculos[v.id] + ')'}"></option>
+                </select>
+            </div>
+            <div class="campo">
+                <label for="pessoaId">Pessoa *</label>
+                <select id="pessoaId" th:field="*{pessoaId}" required>
+                    <option value="0">Selecione uma pessoa</option>
+                    <option th:each="p : ${pessoas}" th:value="${p.id}" th:text="${p.nome}"></option>
+                </select>
+            </div>
+            <div class="campo">
+                <label for="dataInicio">Data de início *</label>
+                <input type="date" id="dataInicio" th:field="*{dataInicio}" required>
+            </div>
+            <div class="campo">
+                <label for="dataFim">Data de fim *</label>
+                <input type="date" id="dataFim" th:field="*{dataFim}" required>
+            </div>
+            <button type="submit" class="btn" th:text="${reserva.id == 0 ? 'Reservar' : 'Salvar alteração'}">Reservar</button>
+            <a th:if="${reserva.id != 0}" class="btn btn-sec" th:href="@{/reservas}">Cancelar edição</a>
+        </form>
+    </div>
+
+    <div class="card" style="margin-top: 1.5rem;">
+        <h3>Reservas cadastradas</h3>
+        <table th:if="${!reservas.isEmpty()}">
+            <thead>
+            <tr>
+                <th>Veículo</th>
+                <th>Pessoa</th>
+                <th>Início</th>
+                <th>Fim</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="r : ${reservas}">
+                <td th:text="${veiculoNomes[r.veiculoId]}"></td>
+                <td th:text="${pessoaNomes[r.pessoaId]}"></td>
+                <td th:text="${#temporals.format(r.dataInicio, 'dd/MM/yyyy')}"></td>
+                <td th:text="${#temporals.format(r.dataFim, 'dd/MM/yyyy')}"></td>
+                <td>
+                    <a class="btn btn-sec" th:href="@{/reservas?editar={id}(id=${r.id})}">Editar</a>
+                    <form th:action="@{/reservas/{id}/excluir(id=${r.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-perigo"
+                                onclick="return confirm('Cancelar esta reserva?');">Cancelar</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="vazio" th:if="${reservas.isEmpty()}">Nenhuma reserva cadastrada.</p>
+    </div>
+
+    <div class="card" style="margin-top: 1.5rem;">
+        <h3>Status dos veículos hoje</h3>
+        <table>
+            <thead><tr><th>Veículo</th><th>Status</th></tr></thead>
+            <tbody>
+            <tr th:each="v : ${veiculos}">
+                <td th:text="${v.placa + ' - ' + v.marca + ' ' + v.modelo}"></td>
+                <td th:text="${statusVeiculos[v.id]}"></td>
+            </tr>
+            <tr th:if="${veiculos.isEmpty()}"><td colspan="2" class="vazio">Nenhum veículo cadastrado.</td></tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

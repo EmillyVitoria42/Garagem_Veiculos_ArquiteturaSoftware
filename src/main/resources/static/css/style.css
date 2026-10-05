@@ -1,0 +1,24 @@
+* { box-sizing: border-box; }
+body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; background: #f4f6f8; color: #1f2933; }
+header { background: #1f3a5f; color: #fff; padding: 1rem 2rem; }
+header h1 { margin: 0; font-size: 1.25rem; }
+main { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+.card { background: #fff; border-radius: 8px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+.topo { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.topo h2 { margin: 0; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid #e4e7eb; }
+th { background: #f0f3f6; }
+.acoes { display: flex; gap: .4rem; }
+.btn { display: inline-block; padding: .45rem .9rem; border: 0; border-radius: 4px; cursor: pointer; font-size: .9rem; text-decoration: none; color: #fff; background: #2f6fb3; }
+.btn-sec { background: #6b7785; }
+.btn-perigo { background: #c0392b; }
+.msg { padding: .7rem 1rem; border-radius: 4px; margin-bottom: 1rem; }
+.msg-ok { background: #e3f6e8; color: #1e6b34; }
+.msg-erro { background: #fdeaea; color: #922b21; }
+.campo { margin-bottom: 1rem; }
+.campo label { display: block; font-weight: 600; margin-bottom: .25rem; }
+.campo input { width: 100%; padding: .55rem; border: 1px solid #c5ccd3; border-radius: 4px; font-size: 1rem; }
+.campo input.invalido { border-color: #c0392b; }
+.erro { color: #c0392b; font-size: .85rem; margin-top: .25rem; }
+.vazio { color: #6b7785; text-align: center; padding: 1.5rem 0; }

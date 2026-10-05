@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${titulo} + ' - Garagem de Veículos'">Pessoa</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header><h1>Garagem de Veículos</h1></header>
+<main>
+    <div class="card">
+        <div class="topo">
+            <h2 th:text="${titulo}">Pessoa</h2>
+        </div>
+
+        <!-- O mesmo formulário serve para cadastrar (id = 0) e editar -->
+        <form th:object="${pessoa}"
+              th:action="${pessoa.id == 0} ? @{/pessoas/novo} : @{/pessoas/{id}/editar(id=${pessoa.id})}"
+              method="post" novalidate>
+
+            <div class="campo">
+                <label for="nome">Nome *</label>
+                <input type="text" id="nome" th:field="*{nome}" th:errorclass="invalido">
+                <div class="erro" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+            </div>
+
+            <div class="campo">
+                <label for="cpf">CPF *</label>
+                <input type="text" id="cpf" th:field="*{cpf}" placeholder="000.000.000-00" th:errorclass="invalido">
+                <div class="erro" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></div>
+            </div>
+
+            <div class="campo">
+                <label for="email">E-mail *</label>
+                <input type="text" id="email" th:field="*{email}" th:errorclass="invalido">
+                <div class="erro" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            </div>
+
+            <div class="campo">
+                <label for="telefone">Telefone</label>
+                <input type="text" id="telefone" th:field="*{telefone}" placeholder="(64) 99999-0000">
+            </div>
+
+            <button type="submit" class="btn">Salvar</button>
+            <a class="btn btn-sec" th:href="@{/pessoas}">Cancelar</a>
+        </form>
+    </div>
+</main>
+</body>
+</html>
